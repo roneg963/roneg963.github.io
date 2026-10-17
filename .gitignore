@@ -1,0 +1,22 @@
+# dependencies and build output
+node_modules/
+dist/
+.astro/
+coverage/
+playwright-report/
+test-results/
+
+# secrets and credentials (never commit)
+.env
+.env.*
+*.pem
+*.key
+id_*
+.npmrc
+
+# editor / OS / logs
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.log

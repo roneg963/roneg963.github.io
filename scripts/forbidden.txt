@@ -1,0 +1,23 @@
+# Forbidden-content rules (regular expressions, case-insensitive, Unicode). One per line.
+# Source: AGENTS.md rule 7 / METHOD section 12. Keep this file free of real values.
+# Reported by file, line and rule only; matched text is never printed.
+# Each rule runs over the whole file, so a value split across lines is still found.
+# This file is scanned like every other tracked file, so each rule below is written so that
+# its own text does not match it (for example a one-letter character class inside a name).
+# Rules avoid nested open-ended quantifiers: a lookbehind anchors where a run may start,
+# so scan time stays linear on very long lines.
+
+# E-mail address
+(?<![a-z0-9._%+-])[a-z0-9._%+-]+@(?:[a-z0-9-]+\.)+[a-z]{2,}
+
+# Israeli phone number: optional +972 / 972 or a leading zero, an optional parenthesis, a two-digit
+# mobile or VoIP prefix (five or seven) or a one-digit area code, then seven digits with up to three
+# separator characters (hyphen, whitespace including a line break, dot) between any two of them
+(?<![\w.])\(?(?:\+972|972|0)[-\s.]*\(?(?:[57]\d|[2-489])\)?[-\s.]*\d(?:[-\s.]{0,3}\d){6}(?!\w)
+
+# Home town (the profile marks it "to be confirmed"; it counts as an address)
+\bG[a]nei\b
+ג[נ]י\s*תקוו?ה
+
+# Unfilled placeholders copied from the profile sources
+\[(?:email|e-mail|phone|מייל|טלפון)\]

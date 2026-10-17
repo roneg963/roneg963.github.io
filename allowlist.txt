@@ -1,0 +1,8 @@
+# Paths that may be tracked in this public repository (ADR-0002). Default deny.
+# A line ending with "/" allows everything under that directory; otherwise an exact path.
+# Adding a line here is a deliberate decision: say why in the task log.
+.gitignore
+README.md
+allowlist.txt
+scripts/
+tests/
