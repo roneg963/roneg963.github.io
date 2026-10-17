@@ -4,5 +4,11 @@
 .gitignore
 README.md
 allowlist.txt
+astro.config.mjs
+package.json
+package-lock.json
 scripts/
 tests/
+src/
+public/
+.github/

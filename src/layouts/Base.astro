@@ -1,0 +1,23 @@
+---
+// Search engines are kept out until launch. RN-040 flips this single constant (Ron approves publishing).
+const INDEXABLE = false;
+
+interface Props {
+  lang: 'he' | 'en';
+  title: string;
+}
+const { lang, title } = Astro.props;
+const dir = lang === 'he' ? 'rtl' : 'ltr';
+---
+<!doctype html>
+<html lang={lang} dir={dir}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    {!INDEXABLE && <meta name="robots" content="noindex, nofollow" />}
+    <title>{title}</title>
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>
