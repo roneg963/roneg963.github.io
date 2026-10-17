@@ -1,7 +1,9 @@
 // Moved from docs/design/reference/reference-v-e.html. Changes against the reference, and only these:
 //  - three comes from npm (pinned to 0.149.0, the reference's version) instead of three.min.js;
 //  - the cube labels, group names and hint lines come from the content file (JSON in the page);
-//  - the animation loop runs only while a scene is on screen (IntersectionObserver).
+//  - the animation loop runs only while a scene is on screen (IntersectionObserver);
+//  - for the English (ltr) page, mirrored (RN-030 part F): the three popped-out pieces are laid out left to right,
+//    and the small sticker text uses the page direction, so labels with "·" or "&" are not reordered. Hebrew unchanged.
 import * as THREE from 'three';
 window.THREE = THREE;
 var DATA = JSON.parse(document.getElementById('cube-data').textContent);
@@ -70,7 +72,7 @@ class Component {
             x.direction = latin ? 'ltr' : 'rtl';
             fit(big, '800', 150, 400, 40);
             x.fillText(big, 256, 214);
-            x.direction = 'rtl'; x.fillStyle = '#4A4458';
+            x.direction = DATA.dir; x.fillStyle = '#4A4458';
             fit(small, '500', 40, 420, 22);
             x.fillText(small, 256, 388);
             x.fillStyle = '#DDBC4B'; x.fillRect(206, 318, 100, 6);
@@ -237,7 +239,7 @@ class Component {
           var mine = lab !== null && Math.floor(lab / 3) === g;
           if (mine) {
             var i3 = lab % 3;
-            S.vB.set((1 - i3) * gap, -0.7 + Math.sin(tm * 0.9 + i3) * 0.05, 3.4);
+            S.vB.set((DATA.dir === 'rtl' ? 1 - i3 : i3 - 1) * gap, -0.7 + Math.sin(tm * 0.9 + i3) * 0.05, 3.4);
             m.position.lerpVectors(S.vA, S.vB, out);
             m.quaternion.copy(S.qA).slerp(S.qI, out);
             var sc = 1 + out * (wide ? 1.05 : 0.7); m.scale.set(sc, sc, sc);

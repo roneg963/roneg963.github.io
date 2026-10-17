@@ -3,7 +3,7 @@ import Base from '../layouts/Base.astro';
 import Home from '../components/Home.astro';
 import { he } from '../content/he';
 ---
-<Base lang="he" title={he.meta.title}>
+<Base lang="he" title={he.meta.title} alternates={{ he: '/', en: '/en/' }}>
   <Home t={he} />
 </Base>
 <script>

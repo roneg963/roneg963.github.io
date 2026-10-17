@@ -1,0 +1,15 @@
+---
+// The footer, moved out of Home.astro unchanged.
+import type { Content } from '../content/he';
+
+interface Props {
+  t: Content;
+}
+const { t } = Astro.props;
+---
+<footer style="background: #03011A; color: #A9A7B8;">
+<div style="max-width: 1280px; margin: 0 auto; padding: 48px 32px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 24px; font-size: 15px;">
+<span lang="en" style="font-family: 'Frank Ruhl Libre', serif; font-size: 22px; letter-spacing: 0.2em; color: #fff;">{t.footer.wordmark}</span>
+<div style="display: flex; flex-wrap: wrap; gap: 24px;"><a href={t.footer.privacyHref}>{t.footer.privacy}</a><a href={t.footer.accessibilityHref}>{t.footer.accessibility}</a><span>{t.footer.copyright}</span></div>
+</div>
+</footer>

@@ -1,10 +1,16 @@
 ---
 import Base from '../../layouts/Base.astro';
+import Home from '../../components/Home.astro';
+import { en } from '../../content/en';
 ---
-<Base lang="en" title="Ron Negrin">
-  <main>
-    <h1>Ron Negrin</h1>
-    <p>Site under construction.</p>
-    <p><a href="/">עברית</a></p>
-  </main>
+<Base lang="en" title={en.meta.title} alternates={{ he: '/', en: '/en/' }}>
+  <Home t={en} />
 </Base>
+<script>
+  // The 3D code (three + the four scenes) loads after the page content, so it never delays the text.
+  const start = () => {
+    import('../../scripts/scene.js');
+  };
+  if (document.readyState === 'complete') start();
+  else window.addEventListener('load', start, { once: true });
+</script>

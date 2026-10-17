@@ -2,12 +2,27 @@
 // The home page markup, moved from docs/design/reference/reference-v-e.html almost as it is:
 // the same elements, classes and inline styles. Only the text comes from the content file.
 import type { Content } from '../content/he';
+import Header from './Header.astro';
+import Footer from './Footer.astro';
 
 interface Props {
   t: Content;
 }
 const { t } = Astro.props;
+// Hebrew (rtl) is the reference and its output is unchanged. English (ltr) is the same design mirrored:
+// the portrait and its fade move to the other side, and the stat separators switch to the other edge.
+const rtl = t.dir === 'rtl';
+const portraitSide = rtl ? 'left' : 'right';
+// The supplied portrait file has a 1px bright column at its right edge. In Hebrew that edge is the faded inner one;
+// mirrored it would sit on the visible outer edge. The file stays as supplied: the English box starts 2px past the
+// viewport edge and the hero (overflow: hidden) clips it.
+const portraitOffset = rtl ? '0' : '-2px';
+const portraitWidth = rtl ? '58%' : 'calc(58% + 2px)';
+const portraitFade = rtl ? 'to left' : 'to right';
+const overlayAngle = rtl ? '270deg' : '90deg';
+const statSeparator = rtl ? 'border-left' : 'border-right';
 const cubeData = {
+  dir: t.dir,
   items: t.cube.items,
   groups: t.cube.groups,
   hintStart: t.cube.hintStart,
@@ -16,29 +31,15 @@ const cubeData = {
 ---
 <div class="rn" dir={t.dir} style="background: #fff; color: var(--text); font-family: 'Open Sans', system-ui, sans-serif; font-size: 18px; line-height: 1.75;">
 
-<header style="position: sticky; top: 0; z-index: 20; background: #fff; border-bottom: 1px solid var(--line);">
-<nav class="rn-nav" aria-label={t.nav.ariaLabel} style="max-width: 1280px; margin: 0 auto; padding: 14px 32px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px;">
-<div class="rn-hide-sm" style="display: flex; gap: 30px; font-size: 16px;">
-<a href="#about">{t.nav.about}</a>
-<a href="#domains">{t.nav.domains}</a>
-<a href="#projects">{t.nav.projects}</a>
-</div>
-<a href="#top" aria-label={t.nav.homeAria} style="display: flex; flex-direction: column; align-items: center; line-height: 1.05;"><span lang="en" style="font-family: 'Frank Ruhl Libre', serif; font-size: 28px; letter-spacing: 0.2em; color: #111;">{t.nav.wordmark}</span><span style="font-size: 12px; letter-spacing: 0.14em; color: var(--muted); margin-top: 5px;">{t.nav.tagline}</span></a>
-<div style="display: flex; gap: 30px; align-items: center; font-size: 16px;">
-<a class="rn-hide-sm" href="#articles">{t.nav.articles}</a>
-<a class="rn-hide-sm" href={t.nav.otherLanguageHref} lang="en" style="color: var(--muted);">{t.nav.otherLanguage}</a>
-<a class="rn-btn" href={t.nav.linkedinHref} style="min-height: 44px; padding: 0 22px; font-size: 15px;">{t.nav.linkedin}</a>
-</div>
-</nav>
-</header>
+<Header t={t} />
 
 <main id="top">
 
 <section aria-labelledby="hero-title" style="position: relative; background: #0A0A0F; color: #fff; overflow: hidden;">
-<div class="rn-portrait" style="position: absolute; top: 0; bottom: 0; left: 0; width: 58%; background: #2B2B30; -webkit-mask-image: linear-gradient(to left, transparent 0%, #000 38%); mask-image: linear-gradient(to left, transparent 0%, #000 38%);">
+<div class="rn-portrait" style={`position: absolute; top: 0; bottom: 0; ${portraitSide}: ${portraitOffset}; width: ${portraitWidth}; background: #2B2B30; -webkit-mask-image: linear-gradient(${portraitFade}, transparent 0%, #000 38%); mask-image: linear-gradient(${portraitFade}, transparent 0%, #000 38%);`}>
 <img src="/portrait.webp" alt={t.hero.portraitAlt} width="762" height="752" style="display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 22%;">
 </div>
-<div aria-hidden="true" style="position: absolute; inset: 0; background: linear-gradient(270deg, rgba(10,10,15,1) 36%, rgba(10,10,15,0.5) 62%, rgba(10,10,15,0.05) 100%);"></div>
+<div aria-hidden="true" style={`position: absolute; inset: 0; background: linear-gradient(${overlayAngle}, rgba(10,10,15,1) 36%, rgba(10,10,15,0.5) 62%, rgba(10,10,15,0.05) 100%);`}></div>
 <div class="rn-in" style="position: relative; max-width: 1280px; margin: 0 auto; padding: 120px 32px 130px; box-sizing: border-box; min-height: 82vh; display: flex; flex-direction: column; justify-content: center;">
 <p style="margin: 0 0 22px; font-size: 15px; font-weight: 600; letter-spacing: 0.16em; color: var(--gold);">{t.hero.eyebrow}</p>
 <h1 id="hero-title" style="margin: 0; max-width: 13ch; font-family: 'Rubik', sans-serif; font-weight: 800; font-size: clamp(48px, 7vw, 96px); line-height: 1.02;">{t.hero.title}</h1>
@@ -62,9 +63,9 @@ const cubeData = {
 <a class="rn-btn dark" href="#path">{t.about.cta}</a>
 </div>
 <div style="flex: 1 1 400px; min-width: 0; display: flex; flex-wrap: wrap; gap: 0; background: var(--cream);">
-<div style="flex: 1 1 50%; box-sizing: border-box; padding: 36px 32px; border-bottom: 1px solid var(--line); border-left: 1px solid var(--line);"><div style="font-family: 'Rubik', sans-serif; font-weight: 800; font-size: 54px; line-height: 1; color: #000;">{t.about.stats[0].big}</div><div style="margin-top: 8px; color: var(--muted);" set:html={t.about.stats[0].labelHtml}></div></div>
+<div style={`flex: 1 1 50%; box-sizing: border-box; padding: 36px 32px; border-bottom: 1px solid var(--line); ${statSeparator}: 1px solid var(--line);`}><div style="font-family: 'Rubik', sans-serif; font-weight: 800; font-size: 54px; line-height: 1; color: #000;">{t.about.stats[0].big}</div><div style="margin-top: 8px; color: var(--muted);" set:html={t.about.stats[0].labelHtml}></div></div>
 <div style="flex: 1 1 50%; box-sizing: border-box; padding: 36px 32px; border-bottom: 1px solid var(--line);"><div style="font-family: 'Rubik', sans-serif; font-weight: 800; font-size: 54px; line-height: 1; color: #000;">{t.about.stats[1].big}</div><div style="margin-top: 8px; color: var(--muted);" set:html={t.about.stats[1].labelHtml}></div></div>
-<div style="flex: 1 1 50%; box-sizing: border-box; padding: 36px 32px; border-left: 1px solid var(--line);"><div style="font-family: 'Rubik', sans-serif; font-weight: 800; font-size: 54px; line-height: 1; color: #000;">{t.about.stats[2].big}</div><div style="margin-top: 8px; color: var(--muted);" set:html={t.about.stats[2].labelHtml}></div></div>
+<div style={`flex: 1 1 50%; box-sizing: border-box; padding: 36px 32px; ${statSeparator}: 1px solid var(--line);`}><div style="font-family: 'Rubik', sans-serif; font-weight: 800; font-size: 54px; line-height: 1; color: #000;">{t.about.stats[2].big}</div><div style="margin-top: 8px; color: var(--muted);" set:html={t.about.stats[2].labelHtml}></div></div>
 <div style="flex: 1 1 50%; box-sizing: border-box; padding: 36px 32px;"><div style="font-family: 'Rubik', sans-serif; font-weight: 800; font-size: 54px; line-height: 1; color: #000;">{t.about.stats[3].big}</div><div style="margin-top: 8px; color: var(--muted);" set:html={t.about.stats[3].labelHtml}></div></div>
 </div>
 </div>
@@ -151,12 +152,7 @@ const cubeData = {
 </section>
 </main>
 
-<footer style="background: #03011A; color: #A9A7B8;">
-<div style="max-width: 1280px; margin: 0 auto; padding: 48px 32px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 24px; font-size: 15px;">
-<span lang="en" style="font-family: 'Frank Ruhl Libre', serif; font-size: 22px; letter-spacing: 0.2em; color: #fff;">{t.footer.wordmark}</span>
-<div style="display: flex; flex-wrap: wrap; gap: 24px;"><a href={t.footer.privacyHref}>{t.footer.privacy}</a><a href={t.footer.accessibilityHref}>{t.footer.accessibility}</a><span>{t.footer.copyright}</span></div>
-</div>
-</footer>
+<Footer t={t} />
 
 </div>
 <script is:inline type="application/json" id="cube-data" set:html={JSON.stringify(cubeData)}></script>

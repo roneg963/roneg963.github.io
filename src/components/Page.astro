@@ -1,0 +1,42 @@
+---
+// The layout for the simple pages (privacy, accessibility, articles): the same header and footer as the home page and
+// the same typography, around plain content. The page content goes in the default slot and uses the "rn-prose" class.
+import Base from '../layouts/Base.astro';
+import Header from './Header.astro';
+import Footer from './Footer.astro';
+import type { Content } from '../content/he';
+
+interface Props {
+  t: Content;
+  title: string; // <title>
+  heading: string; // the visible h1
+  alternates: { he: string; en: string };
+}
+const { t, title, heading, alternates } = Astro.props;
+const lang = t.lang as 'he' | 'en';
+const base = lang === 'he' ? '/' : '/en/';
+---
+<Base lang={lang} title={title} alternates={alternates}>
+<div class="rn" dir={t.dir} style="background: #fff; color: var(--text); font-family: 'Open Sans', system-ui, sans-serif; font-size: 18px; line-height: 1.75;">
+<Header t={t} base={base} />
+<main id="top" style="background: #fff;">
+<div style="max-width: 780px; margin: 0 auto; padding: 96px 32px 110px;">
+<h1 style="margin: 0 0 32px; font-family: 'Rubik', sans-serif; font-weight: 700; font-size: 44px; line-height: 1.15; color: #000;">{heading}</h1>
+<div class="rn-prose"><slot /></div>
+</div>
+</main>
+<Footer t={t} />
+</div>
+</Base>
+
+<style is:global>
+.rn-prose h2{margin:44px 0 12px;font-family:'Rubik',sans-serif;font-weight:600;font-size:26px;line-height:1.3;color:var(--ink)}
+.rn-prose h3{margin:28px 0 8px;font-family:'Rubik',sans-serif;font-weight:600;font-size:21px;line-height:1.3;color:var(--ink)}
+.rn-prose p{margin:0 0 16px}
+.rn-prose ul,.rn-prose ol{margin:0 0 16px;padding-inline-start:26px}
+.rn-prose li{margin:0 0 8px}
+.rn-prose a{color:#8A6F12;text-decoration:underline;text-underline-offset:3px}
+.rn-prose a:hover{color:#000}
+.rn-prose .rn-muted{color:var(--muted)}
+.rn-prose .rn-note{margin:32px 0 0;padding:24px 28px;background:var(--cream);border-top:4px solid var(--gold)}
+</style>

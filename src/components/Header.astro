@@ -1,0 +1,26 @@
+---
+// The sticky header, moved out of Home.astro unchanged. `base` is '' on the home page (links are "#about" and so on)
+// and the home path ("/" or "/en/") on the other pages, so the same links lead back to the home page sections.
+import type { Content } from '../content/he';
+
+interface Props {
+  t: Content;
+  base?: string;
+}
+const { t, base = '' } = Astro.props;
+---
+<header style="position: sticky; top: 0; z-index: 20; background: #fff; border-bottom: 1px solid var(--line);">
+<nav class="rn-nav" aria-label={t.nav.ariaLabel} style="max-width: 1280px; margin: 0 auto; padding: 14px 32px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px;">
+<div class="rn-hide-sm" style="display: flex; gap: 30px; font-size: 16px;">
+<a href={`${base}#about`}>{t.nav.about}</a>
+<a href={`${base}#domains`}>{t.nav.domains}</a>
+<a href={`${base}#projects`}>{t.nav.projects}</a>
+</div>
+<a href={base || '#top'} aria-label={t.nav.homeAria} style="display: flex; flex-direction: column; align-items: center; line-height: 1.05;"><span lang="en" style="font-family: 'Frank Ruhl Libre', serif; font-size: 28px; letter-spacing: 0.2em; color: #111;">{t.nav.wordmark}</span><span style="font-size: 12px; letter-spacing: 0.14em; color: var(--muted); margin-top: 5px;">{t.nav.tagline}</span></a>
+<div style="display: flex; gap: 30px; align-items: center; font-size: 16px;">
+<a class="rn-hide-sm" href={`${base}#articles`}>{t.nav.articles}</a>
+<a class="rn-hide-sm" href={t.nav.otherLanguageHref} lang={t.nav.otherLanguageLang} style="color: var(--muted);">{t.nav.otherLanguage}</a>
+<a class="rn-btn" href={t.nav.linkedinHref} style="min-height: 44px; padding: 0 22px; font-size: 15px;">{t.nav.linkedin}</a>
+</div>
+</nav>
+</header>

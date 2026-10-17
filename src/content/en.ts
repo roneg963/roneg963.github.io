@@ -16,6 +16,7 @@ export const en = {
     articles: 'Articles',
     otherLanguage: 'עברית',
     otherLanguageHref: '/',
+    otherLanguageLang: 'he',
     linkedin: 'LinkedIn',
     linkedinHref: 'https://www.linkedin.com/in/ron-negrin',
     homeAria: 'Ron Negrin — back to top',
@@ -180,9 +181,9 @@ export const en = {
   footer: {
     wordmark: 'RON NEGRIN',
     privacy: 'Privacy notice',
-    privacyHref: '#top',
+    privacyHref: '/en/privacy/',
     accessibility: 'Accessibility',
-    accessibilityHref: '#top',
+    accessibilityHref: '/en/accessibility/',
     copyright: '© 2026 Ron Negrin',
   },
 };

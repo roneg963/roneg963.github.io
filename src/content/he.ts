@@ -16,6 +16,7 @@ export const he = {
     articles: 'מאמרים',
     otherLanguage: 'English',
     otherLanguageHref: '/en/',
+    otherLanguageLang: 'en',
     linkedin: 'לינקדאין',
     linkedinHref: 'https://www.linkedin.com/in/ron-negrin',
     homeAria: 'רון נגרין — לראש העמוד',
@@ -183,10 +184,10 @@ export const he = {
   footer: {
     wordmark: 'RON NEGRIN',
     privacy: 'הודעת פרטיות',
-    // The privacy and accessibility pages arrive in RN-030; until then the links stay on "#top" as in the reference.
-    privacyHref: '#top',
+    // The privacy and accessibility pages are written in RN-030 parts B and C. The reference pointed these links at "#top".
+    privacyHref: '/privacy/',
     accessibility: 'נגישות',
-    accessibilityHref: '#top',
+    accessibilityHref: '/accessibility/',
     copyright: '© 2026 רון נגרין',
   },
 };
