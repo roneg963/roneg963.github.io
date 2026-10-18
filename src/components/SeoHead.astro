@@ -1,0 +1,33 @@
+---
+import { seo, portraitUrl, sameAs } from '../content/seo';
+
+interface Props {
+  lang: 'he' | 'en';
+  title: string;
+  url: string;
+  profile: boolean;
+}
+const { lang, title, url, profile } = Astro.props;
+const c = seo[lang];
+// The home pages describe Ron. Privacy, accessibility and article indexes are not profile pages.
+const profilePage = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfilePage',
+  url,
+  mainEntity: {
+    '@type': 'Person',
+    name: c.name,
+    url,
+    image: portraitUrl,
+    sameAs,
+  },
+};
+---
+<meta name="description" content={c.description} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={c.description} />
+<meta property="og:type" content="website" />
+<meta property="og:locale" content={c.locale} />
+<meta property="og:url" content={url} />
+<meta property="og:image" content={portraitUrl} />
+{profile && <script type="application/ld+json" set:html={JSON.stringify(profilePage).replace(/</g, '\\u003c')} />}

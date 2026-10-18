@@ -10,6 +10,7 @@ import '@fontsource/open-sans/600.css';
 import '@fontsource/frank-ruhl-libre/400.css';
 // The reference's own <style> block, unchanged.
 import '../styles/reference.css';
+import SeoHead from '../components/SeoHead.astro';
 
 // Search engines are kept out until launch. RN-040 flips this single constant (Ron approves publishing).
 const INDEXABLE = false;
@@ -31,6 +32,7 @@ const abs = (path: string) => new URL(path, Astro.site).href;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     {!INDEXABLE && <meta name="robots" content="noindex, nofollow" />}
     <title>{title}</title>
+    <SeoHead lang={lang} title={title} url={abs(alternates[lang])} profile={alternates.he === '/'} />
     <link rel="canonical" href={abs(alternates[lang])} />
     <link rel="alternate" hreflang="he-IL" href={abs(alternates.he)} />
     <link rel="alternate" hreflang="en" href={abs(alternates.en)} />

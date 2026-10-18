@@ -1,0 +1,15 @@
+---
+import Page from '../../components/Page.astro';
+import { en } from '../../content/en';
+import { articlesPage } from '../../content/articles-page';
+const c = articlesPage.en;
+---
+<Page t={en} title={c.title} heading={c.heading} alternates={{ he: '/articles/', en: '/en/articles/' }}>
+  <p class="rn-muted">{c.intro}</p>
+  {c.cards.map((card) => (
+    <article class="rn-note">
+      <p class="rn-muted" set:html={card.metaHtml} />
+      <h2 set:html={card.titleHtml} />
+    </article>
+  ))}
+</Page>

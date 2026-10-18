@@ -1,0 +1,9 @@
+---
+import Page from '../../components/Page.astro';
+import { en } from '../../content/en';
+import { accessibility } from '../../content/accessibility';
+const c = accessibility.en;
+---
+<Page t={en} title={c.title} heading={c.heading} alternates={{ he: '/accessibility/', en: '/en/accessibility/' }}>
+  {c.sections.map((s) => (<><h2>{s.heading}</h2>{s.paragraphs.map((p) => <p set:html={p} />)}</>))}
+</Page>
