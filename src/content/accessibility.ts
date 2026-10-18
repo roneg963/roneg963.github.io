@@ -17,7 +17,7 @@ export const accessibility = {
         paragraphs: [
           'התוכן מוצג כטקסט אמיתי ב-HTML, עם כותרות ואזורי ניווט, תוכן ראשי ופוטר. הקישורים זמינים לניווט במקלדת, עם מסגרת פוקוס גלויה.',
           'העיצוב נבנה מתוך כוונה לשמור על ניגודיות צבעים טובה בין הטקסט לרקע.',
-          'כאשר מוגדרת במכשיר העדפה להפחתת תנועה (prefers-reduced-motion), אפקט הכניסה של העמוד ומעברי הלוחות מכובים, והתנועה לאורך זמן בסצנות התלת-ממדיות נעצרת. תוכן הקובייה זמין גם כרשימת טקסט לקוראי מסך.',
+          'כאשר מוגדרת במכשיר העדפה להפחתת תנועה (prefers-reduced-motion), אפקט הכניסה של העמוד ומעברי הלוחות מכובים, והתנועה בסצנות התלת-ממדיות נעצרת, גם זו שמתרחשת עם הזמן וגם זו שבתגובה לעכבר. תוכן הקובייה זמין גם כרשימת טקסט לקוראי מסך.',
         ],
       },
       {
@@ -51,7 +51,7 @@ export const accessibility = {
         paragraphs: [
           'Content is presented as real HTML text, with headings and navigation, main content and footer regions. Links support keyboard navigation with a visible focus outline.',
           'The design is built with the intention of keeping good colour contrast between text and background.',
-          'When the device preference for reduced motion (prefers-reduced-motion) is enabled, the page entrance effect and panel transitions are turned off, and the continuous motion in the 3D scenes stops. The cube’s content is also available as a text list for screen readers.',
+          'When the device preference for reduced motion (prefers-reduced-motion) is enabled, the page entrance effect and panel transitions are turned off, and motion in the 3D scenes stops, both the motion over time and the motion in response to the mouse. The cube’s content is also available as a text list for screen readers.',
         ],
       },
       {

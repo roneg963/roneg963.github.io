@@ -212,7 +212,7 @@ class Component {
   frame(time) {
     var self = this, vh = window.innerHeight;
     var tm = (this.reduce || this.freeze) ? 0 : time;
-    if (this.freeze) { this.mx = 0; this.my = 0; }
+    if (this.freeze || this.reduce) { this.mx = 0; this.my = 0; }
     var ease = function (x) { x = Math.min(1, Math.max(0, x)); return 1 - Math.pow(1 - x, 3); };
     (this.scenes || []).forEach(function (S) {
       var rect = S.cv.getBoundingClientRect();
