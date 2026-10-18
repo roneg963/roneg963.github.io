@@ -2,6 +2,7 @@
 //  - three comes from npm (pinned to 0.149.0, the reference's version) instead of three.min.js;
 //  - the cube labels, group names and hint lines come from the content file (JSON in the page);
 //  - the animation loop runs only while a scene is on screen (IntersectionObserver);
+//  - with prefers-reduced-motion the helix cubes do not spin frame by frame (Codex review RN-040), and the mouse does not rotate scenes;
 //  - each scene is built only when its canvas comes within 600px of the screen (all at once in ?freeze=1, in the original order);
 //  - for the English (ltr) page, mirrored (RN-030 part F): the three popped-out pieces are laid out left to right,
 //    and the small sticker text uses the page direction, so labels with "·" or "&" are not reordered. Hebrew unchanged.
@@ -306,7 +307,7 @@ class Component {
         } else if (S.kind === 'helix') {
           S.helix.rotation.y = u * Math.PI * 1.6 + tm * 0.05 + self.mx * 0.3;
           S.helix.rotation.x = 0.25 + (u - 0.5) * 0.4;
-          S.helix.children.forEach(function (c, n) { c.rotation.x += 0.004; c.rotation.y += 0.003; });
+          if (!self.reduce) S.helix.children.forEach(function (c, n) { c.rotation.x += 0.004; c.rotation.y += 0.003; });
           S.dust.rotation.y = tm * 0.03 + u;
         } else if (S.kind === 'pyramid') {
           var build = Math.min(1, Math.max(0, (u - 0.12) / 0.55));
