@@ -7,21 +7,22 @@ import { he } from '../content/he';
   <Home t={he} />
 </Base>
 <script>
-  // The 3D code (three + the four scenes) loads after the page content, so it never delays the text.
-  // It starts once the page has loaded and the browser is idle, or at the first user interaction, whichever comes first.
+  // The 3D code (three + the scenes) loads after the page content, and only when a 3D canvas comes within
+  // 1000px of the screen. With ?freeze=1 (screenshot tests) it loads right after the page.
   let started = false;
   const start = () => {
     if (started) return;
     started = true;
-    ['pointerdown', 'pointermove', 'keydown', 'scroll', 'touchstart'].forEach((e) => window.removeEventListener(e, start));
+    near?.disconnect();
     // Two steps so that loading three and building the scenes are separate tasks.
     import('three').then(() => setTimeout(() => import('../scripts/scene.js'), 50));
   };
-  const whenIdle = () => {
-    if ('requestIdleCallback' in window) window.requestIdleCallback(start, { timeout: 4000 });
-    else setTimeout(start, 2000);
+  let near: IntersectionObserver | undefined;
+  const arm = () => {
+    if (/[?&]freeze=1/.test(location.search) || !('IntersectionObserver' in window)) return start();
+    near = new IntersectionObserver((entries) => { if (entries.some((e) => e.isIntersecting)) start(); }, { rootMargin: '1000px 0px' });
+    ['cv-main', 'cv-a', 'cv-b', 'cv-c'].forEach((id) => { const el = document.getElementById(id); if (el) near!.observe(el); });
   };
-  ['pointerdown', 'pointermove', 'keydown', 'scroll', 'touchstart'].forEach((e) => window.addEventListener(e, start, { passive: true }));
-  if (document.readyState === 'complete') whenIdle();
-  else window.addEventListener('load', whenIdle, { once: true });
+  if (document.readyState === 'complete') arm();
+  else window.addEventListener('load', arm, { once: true });
 </script>

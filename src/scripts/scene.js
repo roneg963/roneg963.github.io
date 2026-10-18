@@ -2,9 +2,12 @@
 //  - three comes from npm (pinned to 0.149.0, the reference's version) instead of three.min.js;
 //  - the cube labels, group names and hint lines come from the content file (JSON in the page);
 //  - the animation loop runs only while a scene is on screen (IntersectionObserver);
+//  - each scene is built only when its canvas comes within 600px of the screen (all at once in ?freeze=1, in the original order);
 //  - for the English (ltr) page, mirrored (RN-030 part F): the three popped-out pieces are laid out left to right,
 //    and the small sticker text uses the page direction, so labels with "·" or "&" are not reordered. Hebrew unchanged.
-import * as THREE from 'three';
+import { Vector3, Color, Quaternion, MeshStandardMaterial, Group, sRGBEncoding, Mesh, BoxGeometry, WebGLRenderer, Scene, PointsMaterial, Points, PointLight, PerspectiveCamera, LineSegments, LineBasicMaterial, HemisphereLight, Fog, Euler, EdgesGeometry, DirectionalLight, CanvasTexture, BufferGeometry, BufferAttribute } from 'three';
+// Only what the scenes use is imported (same three 0.149.0); the code below keeps the reference's THREE.* names.
+var THREE = { Vector3, Color, Quaternion, MeshStandardMaterial, Group, sRGBEncoding, Mesh, BoxGeometry, WebGLRenderer, Scene, PointsMaterial, Points, PointLight, PerspectiveCamera, LineSegments, LineBasicMaterial, HemisphereLight, Fog, Euler, EdgesGeometry, DirectionalLight, CanvasTexture, BufferGeometry, BufferAttribute };
 window.THREE = THREE;
 var DATA = JSON.parse(document.getElementById('cube-data').textContent);
 
@@ -54,7 +57,9 @@ class Component {
     this.scenes = [];
 
     // MAIN: a Rubik-style cube that breaks into pieces; each labelled piece = something Ron did.
-    var M = mk(this.cvMain, 34);
+    this.build = {};
+    this.build.main = function () {
+    var M = mk(self.cvMain, 34);
     if (M) {
       var items = DATA.items;
       var sticker = function (fill, big, small) {
@@ -110,20 +115,24 @@ class Component {
       var d1 = dust(600, 5, 14, 14); M.sc.add(d1);
       M.kind = 'explode'; M.cells = cells; M.nLabels = li; M.dust = d1;
       M.qA = new THREE.Quaternion(); M.qT = new THREE.Quaternion(); M.eT = new THREE.Euler(); M.vA = new THREE.Vector3(); M.vB = new THREE.Vector3(); M.qI = new THREE.Quaternion();
-      this.scenes.push(M);
+      self.scenes.push(M);
     }
+    };
     // A: wave of cubes
-    var A = mk(this.cvA, 30);
+    this.build.a = function () {
+    var A = mk(self.cvA, 30);
     if (A) {
       var wave = new THREE.Group(); A.sc.add(wave);
       var wc = [];
       for (var i = 0; i < 30; i++) { var q = cube(0.55, i % 9 === 4 ? GOLD : CREAM); q.position.x = -17 + i * 1.15; wave.add(q); wc.push(q); }
       A.kind = 'wave'; A.wave = wave; A.items = wc;
       A.cam.position.set(0, 1.4, 11); A.cam.lookAt(0, 0, 0);
-      this.scenes.push(A);
+      self.scenes.push(A);
     }
+    };
     // B: helix of cubes around the quote
-    var B = mk(this.cvB, 32);
+    this.build.b = function () {
+    var B = mk(self.cvB, 32);
     if (B) {
       var helix = new THREE.Group(); B.sc.add(helix);
       for (var k = 0; k < 56; k++) {
@@ -136,10 +145,12 @@ class Component {
       var d2 = dust(380, 2, 9, 6); B.sc.add(d2);
       B.kind = 'helix'; B.helix = helix; B.dust = d2;
       B.cam.position.set(0, 1.2, 13); B.cam.lookAt(0, 0, 0);
-      this.scenes.push(B);
+      self.scenes.push(B);
     }
+    };
     // C: cubes stacking into a stepped pyramid
-    var C = mk(this.cvC, 30);
+    this.build.c = function () {
+    var C = mk(self.cvC, 30);
     if (C) {
       var pyr = new THREE.Group(); C.sc.add(pyr);
       var bricks = [];
@@ -157,15 +168,15 @@ class Component {
       }
       C.kind = 'pyramid'; C.pyr = pyr; C.bricks = bricks;
       C.cam.position.set(0, 4.5, 13); C.cam.lookAt(0, 0.2, 0);
-      this.scenes.push(C);
+      self.scenes.push(C);
     }
+    };
 
     this.mx = 0; this.my = 0;
     this.onMove = function (e) { self.mx = e.clientX / window.innerWidth - 0.5; self.my = e.clientY / window.innerHeight - 0.5; };
     window.addEventListener('pointermove', this.onMove, { passive: true });
     this.onResize = function () { self.resizeAll(); };
     window.addEventListener('resize', this.onResize);
-    this.resizeAll();
     this.t0 = performance.now();
     // Draw only while a scene is on screen (IntersectionObserver). The reference looped all the time.
     this.visible = new Set();
@@ -174,30 +185,58 @@ class Component {
       self.frame((now - self.t0) / 1000);
       self.raf = requestAnimationFrame(loop);
     };
-    if ('IntersectionObserver' in window) {
+    var hasIO = 'IntersectionObserver' in window;
+    if (hasIO) {
       this.io = new IntersectionObserver(function (entries) {
         entries.forEach(function (e) { if (e.isIntersecting) self.visible.add(e.target); else self.visible.delete(e.target); });
         if (self.visible.size && !self.raf) self.raf = requestAnimationFrame(loop);
       }, { rootMargin: '50px' });
-      this.scenes.forEach(function (S) { self.io.observe(S.cv); });
+    }
+    var keys = [['main', 'cvMain'], ['a', 'cvA'], ['b', 'cvB'], ['c', 'cvC']];
+    var built = {};
+    var buildOne = function (key) {
+      if (built[key]) return;
+      built[key] = true;
+      var n = self.scenes.length;
+      self.build[key]();
+      var S = self.scenes[n];
+      if (!S) return;
+      self.resizeOne(S);
+      if (hasIO) self.io.observe(S.cv);
+    };
+    if (this.freeze || !hasIO) {
+      // Deterministic order for screenshots (seeded random), and the reference behaviour without IntersectionObserver.
+      keys.forEach(function (k) { buildOne(k[0]); });
+      if (!hasIO) { this.visible.add(this.cvMain || this.cvA); this.raf = requestAnimationFrame(loop); }
     } else {
-      this.visible.add(this.cvMain || this.cvA); // no IntersectionObserver: keep the reference behaviour
-      this.raf = requestAnimationFrame(loop);
+      var near = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (!e.isIntersecting) return;
+          near.unobserve(e.target);
+          var k = keys.filter(function (x) { return self[x[1]] === e.target; })[0];
+          if (k) setTimeout(function () { buildOne(k[0]); }, 0);
+        });
+      }, { rootMargin: '600px 0px' });
+      keys.forEach(function (k) { if (self[k[1]]) near.observe(self[k[1]]); });
+      this.near = near;
     }
   }
   componentWillUnmount() {
     cancelAnimationFrame(this.raf);
     window.removeEventListener('pointermove', this.onMove);
     window.removeEventListener('resize', this.onResize);
+    if (this.near) this.near.disconnect();
     (this.scenes || []).forEach(function (S) { S.r.dispose(); });
   }
   resizeAll() {
-    (this.scenes || []).forEach(function (S) {
-      var w = S.cv.clientWidth || 1, h = S.cv.clientHeight || 1;
-      S.r.setSize(w, h, false);
-      S.cam.aspect = w / h; S.cam.updateProjectionMatrix();
-      S.wide = w > 900;
-    });
+    var self = this;
+    (this.scenes || []).forEach(function (S) { self.resizeOne(S); });
+  }
+  resizeOne(S) {
+    var w = S.cv.clientWidth || 1, h = S.cv.clientHeight || 1;
+    S.r.setSize(w, h, false);
+    S.cam.aspect = w / h; S.cam.updateProjectionMatrix();
+    S.wide = w > 900;
   }
   pinProgress(cv) {
     var sec = cv.closest('section'); if (!sec) return 0;

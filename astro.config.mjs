@@ -5,6 +5,8 @@ import sitemap from '@astrojs/sitemap';
 export default defineConfig({
   site: 'https://roneg963.github.io',
   trailingSlash: 'always',
+  // Inline the (small) CSS in each page so it does not block rendering as a separate request.
+  build: { inlineStylesheets: 'always' },
   i18n: {
     defaultLocale: 'he',
     locales: ['he', 'en'],
