@@ -6,5 +6,6 @@ const c = privacy.en;
 ---
 <Page t={en} title={c.title} heading={c.heading} alternates={{ he: '/privacy/', en: '/en/privacy/' }}>
   <p class="rn-muted">{c.updated}</p>
+  <p>{c.intro}</p>
   {c.sections.map((s) => (<><h2>{s.heading}</h2>{s.paragraphs.map((p) => <p set:html={p} />)}</>))}
 </Page>

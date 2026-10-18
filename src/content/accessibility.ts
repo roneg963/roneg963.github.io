@@ -1,13 +1,15 @@
-// Draft wording for Ron's approval (RN-030 part C). No conformance claim.
+// Wording approved by Ron on 2026-10-18 with his corrections (RN-030 part C).
+// Launch (RN-040): after the axe check, update the "full audit" sentence with what was checked and when.
 export const accessibility = {
   he: {
     title: 'נגישות | רון נגרין',
     heading: 'נגישות',
+    updated: 'עודכן לאחרונה: 2026-10-18',
     sections: [
       {
-        heading: 'היעד שלנו',
+        heading: 'היעד',
         paragraphs: [
-          'אנחנו מכוונים להנגשת האתר לפי WCAG 2.2 ברמה AA. זו הצהרת יעד; אין כאן הצהרה על תאימות מלאה לתקן.',
+          'המטרה היא להנגיש את האתר לפי WCAG 2.2 ברמה AA. זו הצהרת יעד; אין כאן הצהרה על תאימות מלאה לתקן.',
         ],
       },
       {
@@ -27,7 +29,7 @@ export const accessibility = {
       {
         heading: 'דיווח על קושי בנגישות',
         paragraphs: [
-          'אם נתקלתם בקושי, אפשר לפנות דרך <a href="https://www.linkedin.com/in/ron-negrin">הפרופיל בלינקדאין</a>. כדאי לציין את העמוד, מה ניסיתם לעשות ובאיזה מכשיר ודפדפן השתמשתם.',
+          'מי שנתקל בקושי יכול לפנות דרך <a href="https://www.linkedin.com/in/ron-negrin">הפרופיל בלינקדאין</a>. כדאי לציין את העמוד, מה ניסיתם לעשות ובאיזה מכשיר ודפדפן השתמשתם.',
         ],
       },
     ],
@@ -35,11 +37,12 @@ export const accessibility = {
   en: {
     title: 'Accessibility | Ron Negrin',
     heading: 'Accessibility',
+    updated: 'Last updated: 2026-10-18',
     sections: [
       {
-        heading: 'Our goal',
+        heading: 'Goal',
         paragraphs: [
-          'We aim to make this site accessible according to WCAG 2.2 Level AA. This is a goal, not a claim of full conformance.',
+          'The goal is to make this site accessible according to WCAG 2.2 Level AA. This is a goal, not a claim of full conformance.',
         ],
       },
       {
@@ -59,7 +62,7 @@ export const accessibility = {
       {
         heading: 'Reporting an accessibility difficulty',
         paragraphs: [
-          'If you encounter a difficulty, please get in touch through <a href="https://www.linkedin.com/in/ron-negrin">the LinkedIn profile</a>. Please describe the page, what you tried to do, and the device and browser you used.',
+          'Anyone who encounters a difficulty can get in touch through <a href="https://www.linkedin.com/in/ron-negrin">the LinkedIn profile</a>. Please describe the page, what you tried to do, and the device and browser you used.',
         ],
       },
     ],

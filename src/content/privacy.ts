@@ -1,9 +1,11 @@
-// Draft wording for Ron's approval (RN-030 part B).
+// Wording approved by Ron on 2026-10-18 with his corrections (RN-030 part B).
+// Launch (RN-040) must verify in the browser network tool that no third-party request is made.
 export const privacy = {
   he: {
     title: 'הודעת פרטיות | רון נגרין',
     heading: 'הודעת פרטיות',
     updated: 'עודכן לאחרונה: 2026-10-18',
+    intro: 'האתר הוא אתר אישי של רון נגרין.',
     sections: [
       {
         heading: 'מידע באתר',
@@ -15,13 +17,13 @@ export const privacy = {
       {
         heading: 'אירוח האתר',
         paragraphs: [
-          'האתר מיועד לאירוח ב-GitHub Pages. במסגרת האירוח, GitHub עשויה לשמור לוגים טכניים של בקשות, כגון כתובת IP, לפי מדיניות הפרטיות שלה.',
+          'האתר מתארח ב-GitHub Pages. במסגרת האירוח, GitHub שומרת לוגים טכניים של בקשות, כולל כתובת IP של כל מבקר, לצורכי אבטחה, לפי <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement">מדיניות הפרטיות של GitHub</a>.',
         ],
       },
       {
         heading: 'חיפוש וקישורים חיצוניים',
         paragraphs: [
-          'מדידת הופעת האתר בחיפוש מיועדת להתבצע באמצעות Google Search Console, בצד של גוגל וללא קוד מדידה באתר.',
+          'מדידת הופעת האתר בחיפוש מתבצעת באמצעות Google Search Console, בצד של גוגל וללא קוד מדידה באתר.',
           'הקישור ללינקדאין מוביל מחוץ לאתר. לאחר המעבר חלה מדיניות הפרטיות של לינקדאין.',
         ],
       },
@@ -37,6 +39,7 @@ export const privacy = {
     title: 'Privacy notice | Ron Negrin',
     heading: 'Privacy notice',
     updated: 'Last updated: 2026-10-18',
+    intro: 'This is the personal website of Ron Negrin.',
     sections: [
       {
         heading: 'Information on this site',
@@ -48,13 +51,13 @@ export const privacy = {
       {
         heading: 'Site hosting',
         paragraphs: [
-          'The site is intended to be hosted on GitHub Pages. As part of hosting, GitHub may keep technical request logs, such as IP addresses, under its privacy policy.',
+          'The site is hosted on GitHub Pages. As part of hosting, GitHub keeps technical request logs, including the IP address of every visitor, for security purposes, under <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement">GitHub’s privacy statement</a>.',
         ],
       },
       {
         heading: 'Search and external links',
         paragraphs: [
-          'Search visibility is intended to be measured using Google Search Console, on Google’s side and without measurement code on this site.',
+          'Search visibility is measured using Google Search Console, on Google’s side and without measurement code on this site.',
           'The LinkedIn link leads away from this site. LinkedIn’s privacy policy applies after you follow it.',
         ],
       },
