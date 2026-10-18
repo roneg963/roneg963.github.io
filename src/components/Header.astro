@@ -16,7 +16,7 @@ const { t, base = '' } = Astro.props;
 <a href={`${base}#domains`}>{t.nav.domains}</a>
 <a href={`${base}#projects`}>{t.nav.projects}</a>
 </div>
-<a href={base || '#top'} aria-label={t.nav.homeAria} style="display: flex; flex-direction: column; align-items: center; line-height: 1.05;"><span lang="en" style="font-family: 'Frank Ruhl Libre', serif; font-size: 28px; letter-spacing: 0.2em; color: #111;">{t.nav.wordmark}</span><span style="font-size: 12px; letter-spacing: 0.14em; color: var(--muted); margin-top: 5px;">{t.nav.tagline}</span></a>
+<a href={base || '#top'} style="display: flex; flex-direction: column; align-items: center; line-height: 1.05;"><span lang="en" style="font-family: 'Frank Ruhl Libre', serif; font-size: 28px; letter-spacing: 0.2em; color: #111;">{t.nav.wordmark}</span><span style="font-size: 12px; letter-spacing: 0.14em; color: var(--muted); margin-top: 5px;">{t.nav.tagline}</span></a>
 <div style="display: flex; gap: 30px; align-items: center; font-size: 16px;">
 <a class="rn-hide-sm" href={`${base}#articles`}>{t.nav.articles}</a>
 <a href={t.nav.otherLanguageHref} lang={t.nav.otherLanguageLang} style="color: var(--muted);">{t.nav.otherLanguage}</a>

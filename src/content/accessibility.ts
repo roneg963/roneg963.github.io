@@ -24,7 +24,7 @@ export const accessibility = {
         heading: 'מגבלות ידועות',
         paragraphs: [
           'סצנות התלת-ממד הן המחשה דקורטיבית; אין צורך להסתמך עליהן כדי לקרוא את התוכן. בטלפון מוצג ניווט מצומצם: קישור שפה וקישור ללינקדאין לצד סימן השם.',
-          'בדיקת נגישות מלאה עדיין לא בוצעה.',
+          'בוצעה בדיקה אוטומטית (axe) בתאריך 2026-10-18 ולא נמצאו בה הפרות. הבדיקה האוטומטית לא הכריעה בניגודיות של טקסט מעל תמונות ורקעים מדורגים, ובדיקה ידנית מלאה עדיין לא בוצעה.',
         ],
       },
       {
@@ -58,7 +58,7 @@ export const accessibility = {
         heading: 'Known limitations',
         paragraphs: [
           'The 3D scenes are decorative illustrations; reading the content does not depend on them. On phones, navigation is limited to a language link and a LinkedIn link alongside the wordmark.',
-          'A full accessibility audit has not yet been performed.',
+          'An automated check (axe) was performed on 2026-10-18 and found no violations. The automated check could not decide the contrast of text over images and gradients, and a full manual audit has not yet been performed.',
         ],
       },
       {

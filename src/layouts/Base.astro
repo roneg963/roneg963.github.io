@@ -33,6 +33,7 @@ const abs = (path: string) => new URL(path, Astro.site).href;
     {!INDEXABLE && <meta name="robots" content="noindex, nofollow" />}
     <title>{title}</title>
     <SeoHead lang={lang} title={title} url={abs(alternates[lang])} profile={alternates.he === '/'} />
+    <link rel="icon" href="data:," />
     <link rel="canonical" href={abs(alternates[lang])} />
     <link rel="alternate" hreflang="he-IL" href={abs(alternates.he)} />
     <link rel="alternate" hreflang="en" href={abs(alternates.en)} />
