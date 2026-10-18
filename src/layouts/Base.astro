@@ -11,6 +11,13 @@ import '@fontsource/frank-ruhl-libre/400.css';
 // The reference's own <style> block, unchanged.
 import '../styles/reference.css';
 import SeoHead from '../components/SeoHead.astro';
+// The few font files the first screen of a home page needs are preloaded (same files the CSS already uses),
+// so the hero text does not shift when the fonts arrive.
+import rubikLatin800 from '@fontsource/rubik/files/rubik-latin-800-normal.woff2?url';
+import rubikHebrew800 from '@fontsource/rubik/files/rubik-hebrew-800-normal.woff2?url';
+import openSansLatin400 from '@fontsource/open-sans/files/open-sans-latin-400-normal.woff2?url';
+import openSansHebrew400 from '@fontsource/open-sans/files/open-sans-hebrew-400-normal.woff2?url';
+import frankLatin400 from '@fontsource/frank-ruhl-libre/files/frank-ruhl-libre-latin-400-normal.woff2?url';
 
 // Search engines are kept out until launch. RN-040 flips this single constant (Ron approves publishing).
 const INDEXABLE = false;
@@ -23,6 +30,8 @@ interface Props {
 }
 const { lang, title, alternates } = Astro.props;
 const dir = lang === 'he' ? 'rtl' : 'ltr';
+const isHome = alternates.he === '/';
+const preloadFonts = lang === 'he' ? [rubikHebrew800, rubikLatin800, openSansHebrew400, frankLatin400] : [rubikLatin800, openSansLatin400, frankLatin400];
 const abs = (path: string) => new URL(path, Astro.site).href;
 ---
 <!doctype html>
@@ -32,6 +41,7 @@ const abs = (path: string) => new URL(path, Astro.site).href;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     {!INDEXABLE && <meta name="robots" content="noindex, nofollow" />}
     <title>{title}</title>
+    {isHome && preloadFonts.map((href) => <link rel="preload" as="font" type="font/woff2" href={href} crossorigin />)}
     <SeoHead lang={lang} title={title} url={abs(alternates[lang])} profile={alternates.he === '/'} />
     <link rel="icon" href="data:," />
     <link rel="canonical" href={abs(alternates[lang])} />
