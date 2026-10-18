@@ -8,9 +8,20 @@ import { he } from '../content/he';
 </Base>
 <script>
   // The 3D code (three + the four scenes) loads after the page content, so it never delays the text.
+  // It starts once the page has loaded and the browser is idle, or at the first user interaction, whichever comes first.
+  let started = false;
   const start = () => {
-    import('../scripts/scene.js');
+    if (started) return;
+    started = true;
+    ['pointerdown', 'pointermove', 'keydown', 'scroll', 'touchstart'].forEach((e) => window.removeEventListener(e, start));
+    // Two steps so that loading three and building the scenes are separate tasks.
+    import('three').then(() => setTimeout(() => import('../scripts/scene.js'), 50));
   };
-  if (document.readyState === 'complete') start();
-  else window.addEventListener('load', start, { once: true });
+  const whenIdle = () => {
+    if ('requestIdleCallback' in window) window.requestIdleCallback(start, { timeout: 4000 });
+    else setTimeout(start, 2000);
+  };
+  ['pointerdown', 'pointermove', 'keydown', 'scroll', 'touchstart'].forEach((e) => window.addEventListener(e, start, { passive: true }));
+  if (document.readyState === 'complete') whenIdle();
+  else window.addEventListener('load', whenIdle, { once: true });
 </script>
