@@ -149,7 +149,7 @@ export const en = {
   path: {
     title: 'My background',
     cards: [
-      { dateHtml: '2021 – 2027 (expected)', titleHtml: 'Bachelor of Laws – LL.B.', subHtml: 'Ono Academic College · GPA 93' },
+      { dateHtml: 'Final-year law student', titleHtml: 'Bachelor of Laws – LL.B.', subHtml: 'Ono Academic College · GPA 93' },
       { dateHtml: '2022 – Present', titleHtml: "Developer's Assistant & Residential Project Manager", subHtml: 'Park HaYam Residential Project' },
       { dateHtml: '2024 – Present', titleHtml: 'Founder – Events Production & Marketing', subHtml: 'Business, operations and marketing management' },
       { dateHtml: '2017 – 2020', titleHtml: 'B2B Business Operations Manager', subHtml: 'Skyline · International negotiations' },
