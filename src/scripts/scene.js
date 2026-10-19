@@ -3,6 +3,7 @@
 //  - the cube labels, group names and hint lines come from the content file (JSON in the page);
 //  - the animation loop runs only while a scene is on screen (IntersectionObserver);
 //  - with prefers-reduced-motion the helix cubes do not spin frame by frame (Codex review RN-040), and the mouse does not rotate scenes;
+//  - on portrait screens (aspect < 0.85) the three popped-out cube pieces are stacked vertically instead of side by side (RN-040, Ron);
 //  - each scene is built only when its canvas comes within 600px of the screen (all at once in ?freeze=1, in the original order);
 //  - for the English (ltr) page, mirrored (RN-030 part F): the three popped-out pieces are laid out left to right,
 //    and the small sticker text uses the page direction, so labels with "·" or "&" are not reordered. Hebrew unchanged.
@@ -279,7 +280,9 @@ class Component {
           var mine = lab !== null && Math.floor(lab / 3) === g;
           if (mine) {
             var i3 = lab % 3;
-            S.vB.set((DATA.dir === 'rtl' ? 1 - i3 : i3 - 1) * gap, -0.7 + Math.sin(tm * 0.9 + i3) * 0.05, 3.4);
+            // Portrait phones: three pieces side by side do not fit the width, so they are stacked top to bottom instead.
+            if (S.cam.aspect < 0.85) S.vB.set(0, -0.7 + (1 - i3) * 2.0 + Math.sin(tm * 0.9 + i3) * 0.05, 3.4);
+            else S.vB.set((DATA.dir === 'rtl' ? 1 - i3 : i3 - 1) * gap, -0.7 + Math.sin(tm * 0.9 + i3) * 0.05, 3.4);
             m.position.lerpVectors(S.vA, S.vB, out);
             m.quaternion.copy(S.qA).slerp(S.qI, out);
             var sc = 1 + out * (wide ? 1.05 : 0.7); m.scale.set(sc, sc, sc);

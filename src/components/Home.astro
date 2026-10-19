@@ -28,6 +28,9 @@ const cubeData = {
   hintStart: t.cube.hintStart,
   hintEnd: t.cube.hintEnd,
 };
+// Scroll length of the pinned cube section. The reference used 320vh, which moved through the cube groups too quickly
+// (Ron, 2026-10-19); this is the single place to change it. Each of the four groups gets 0.86 * (height - 100vh) / 4 of scroll.
+const cubeSectionHeight = '500vh';
 ---
 <div class="rn" dir={t.dir} style="background: #fff; color: var(--text); font-family: 'Open Sans', system-ui, sans-serif; font-size: 18px; line-height: 1.75;">
 
@@ -71,7 +74,7 @@ const cubeData = {
 </div>
 </section>
 
-<section id="achievements" aria-labelledby="ach-title" style="position: relative; height: 320vh; background: var(--navy);">
+<section id="achievements" aria-labelledby="ach-title" style={`position: relative; height: ${cubeSectionHeight}; background: var(--navy);`}>
 <div class="rn-pin">
 <canvas class="rn-stage" id="cv-main" role="img" aria-label={t.achievements.canvasAria}></canvas>
 <div style="position: relative; z-index: 1; max-width: 1280px; margin: 0 auto; padding: 56px 32px 0; box-sizing: border-box; pointer-events: none;">

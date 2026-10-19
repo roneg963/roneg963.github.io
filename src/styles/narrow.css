@@ -1,0 +1,65 @@
+/* Narrow screens only (phones). Added after the reference CSS, which was built for a desktop width.
+   Every rule is inside the media query, so widths above 700px (desktop, tablet) keep the reference look.
+   The markup keeps the reference's inline styles; these rules override them with !important. */
+@media (max-width: 700px) {
+  .rn { font-size: 16px !important; line-height: 1.65 !important; }
+
+  /* Sticky header: one compact row instead of a tall block. */
+  .rn-nav { padding: 8px 16px !important; gap: 6px 12px !important; }
+  .rn-nav a span[lang="en"] { font-size: 20px !important; letter-spacing: 0.14em !important; }
+  .rn-nav a span:not([lang]) { font-size: 10.5px !important; letter-spacing: 0.08em !important; margin-top: 3px !important; }
+  .rn-nav div { gap: 14px !important; font-size: 15px !important; }
+  .rn-nav .rn-btn { min-height: 38px !important; padding: 0 16px !important; font-size: 14px !important; }
+
+  /* Buttons. */
+  .rn-btn { min-height: 46px; padding: 0 22px; font-size: 15px; }
+
+  /* Hero. */
+  .rn-in[style*="padding: 120px 32px 130px"] { padding: 64px 20px 72px !important; min-height: 0 !important; }
+  .rn-in > p[style*="font-size: 15px"] { font-size: 13px !important; margin-bottom: 14px !important; }
+  #hero-title { font-size: clamp(34px, 11vw, 46px) !important; }
+  .rn-in > p[style*="font-size: 21px"] { font-size: 17px !important; margin-top: 18px !important; }
+  .rn-in > div[style*="margin-top: 40px"] { margin-top: 26px !important; gap: 10px !important; }
+
+  /* Section padding (110px 32px on desktop). */
+  div[style*="padding: 110px 32px"] { padding: 60px 20px !important; }
+  div[style*="padding: 110px 32px 40px"] { padding: 60px 20px 16px !important; }
+  div[style*="padding: 40px 32px 110px"] { padding: 28px 20px 60px !important; }
+  div[style*="padding: 96px 32px"] { padding: 52px 20px !important; }
+  div[style*="padding: 48px 32px"] { padding: 32px 20px !important; }
+  div[style*="padding: 56px 32px 0"] { padding: 20px 20px 0 !important; }
+
+  /* Headings. */
+  h2[style*="font-size: 44px"] { font-size: clamp(28px, 8.4vw, 34px) !important; }
+  h2[style*="font-size: 40px"] { font-size: clamp(25px, 7.4vw, 30px) !important; }
+  h3[style*="font-size: 36px"] { font-size: 26px !important; }
+  h3[style*="font-size: 26px"] { font-size: 21px !important; }
+  h3[style*="font-size: 23px"] { font-size: 19px !important; }
+  h3[style*="font-size: 22px"] { font-size: 19px !important; }
+  p[style*="font-size: 23px"] { font-size: 19px !important; }
+  #quote-b { font-size: clamp(22px, 6.6vw, 28px) !important; padding: 0 16px; }
+
+  /* Rows that wrap on desktop: smaller gaps, so the columns stack tightly. */
+  div[style*="gap: 64px"] { gap: 28px !important; }
+  div[style*="gap: 72px"] { gap: 40px !important; }
+  article[style*="gap: 56px"] { gap: 20px !important; }
+  div[style*="gap: 24px"] { gap: 16px !important; }
+
+  /* Stat tiles (about). */
+  div[style*="font-size: 54px"] { font-size: 38px !important; }
+  div[style*="padding: 36px 32px"] { padding: 22px 16px !important; }
+
+  /* Cards. */
+  div[style*="flex: 1 1 300px"] { padding: 22px !important; }
+  div[style*="font-size: 56px"] { font-size: 42px !important; }
+  div[style*="flex: 1 1 280px"] { padding: 22px !important; }
+  article[style*="flex: 1 1 300px"] { padding: 22px !important; }
+
+  /* Project panels. */
+  span[style*="font-size: 120px"] { font-size: 76px !important; }
+  span[style*="font-size: 56px"] { font-size: 40px !important; }
+  span[style*="font-size: 52px"] { font-size: 36px !important; }
+
+  /* Footer. */
+  footer div[style*="gap: 24px"] { gap: 14px !important; font-size: 14px !important; }
+}
