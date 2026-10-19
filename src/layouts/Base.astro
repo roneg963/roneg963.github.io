@@ -41,6 +41,8 @@ const abs = (path: string) => new URL(path, Astro.site).href;
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    {/* לא להסיר — האימות של Search Console תלוי בה */}
+    <meta name="google-site-verification" content="AsV07tyxY3IMmpOb_4MZnqyvfuBIUWbp3G3pxCnxe-w" />
     {!INDEXABLE && <meta name="robots" content="noindex, nofollow" />}
     <title>{title}</title>
     {isHome && preloadFonts.map((href) => <link rel="preload" as="font" type="font/woff2" href={href} crossorigin />)}
